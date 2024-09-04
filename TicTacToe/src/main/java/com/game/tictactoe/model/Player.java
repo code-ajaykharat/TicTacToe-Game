@@ -7,14 +7,14 @@ public class Player {
     private String name;
     private PlayerType playerType;
     private char symbol;
-    private Scanner sc;
+    private Scanner scanner;
 
     public Player(int id, String name, PlayerType playerType, char symbol) {
         this.id = id;
         this.name = name;
         this.playerType = playerType;
         this.symbol = symbol;
-        this.sc = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     public int getId() {
@@ -49,12 +49,12 @@ public class Player {
         this.symbol = symbol;
     }
 
-    public Move makeMove(){
-        int row,col;
+    public Move makeMove(Board board) {
+        int row, col;
         System.out.println("Please provide row number: ");
-        row = sc.nextInt();
+        row = scanner.nextInt();
         System.out.println("Please provide col number: ");
-        col = sc.nextInt();
-        return new Move(new Cell(row,col),this);
+        col = scanner.nextInt();
+        return new Move(new Cell(row, col), this);
     }
 }

@@ -44,11 +44,12 @@ public class Cell {
     public void setPlayer(Player player) {
         this.player = player;
     }
-    public void printCell(){
-        if(this.cellState.equals(CellState.EMPTY) || this.player == null){
-            System.out.print("| |");
-        }else{
-            System.out.print("|"+player.getSymbol()+"|");
+
+    public void printCell() {
+        if (this.cellState.equals(CellState.EMPTY) || this.player == null) {
+            System.out.print("| - |");
+        } else if (this.cellState.equals(CellState.FILLED)) {
+            System.out.print("| " + this.player.getSymbol() + " |");
         }
     }
 }

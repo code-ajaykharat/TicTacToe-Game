@@ -1,9 +1,9 @@
 package com.game.tictactoe.model;
 
-import com.game.tictactoe.service.BotPlayingLevel;
-import com.game.tictactoe.service.BotPlayingLevelFactory;
+import com.game.tictactoe.service.bot.BotPlayingLevel;
+import com.game.tictactoe.service.bot.BotPlayingLevelFactory;
 
-public class Bot extends Player{
+public class Bot extends Player {
     private BotDifficultyLevel botDifficultyLevel;
     private BotPlayingLevel botPlayingLevel;
 
@@ -29,7 +29,7 @@ public class Bot extends Player{
         this.botPlayingLevel = botPlayingLevel;
     }
 
-    public Move makeMove(Board board){
-        return this.botPlayingLevel.makeMove(board, this);
+    public Move makeMove(Board board) {
+        return this.botPlayingLevel.makeMove(board);
     }
 }
