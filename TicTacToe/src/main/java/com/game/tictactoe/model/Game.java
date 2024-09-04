@@ -171,7 +171,7 @@ public class Game {
         board.display();
     }
 
-    private void validateMove(Move move) {
+    private boolean validateMove(Move move) {
         if (move != null) {
             int row = move.getCell().getRow();
             int col = move.getCell().getCol();
@@ -179,7 +179,7 @@ public class Game {
             if (row < 0 || row >= board.getDimension() || col < 0 || col >= board.getDimension()) {
                 System.out.println("Incorrect row or col number. Play again!");
                 executeMove();
-                return;
+                return false;
             }
 
             Cell cell = this.board.getGrid().get(row).get(col);
@@ -187,8 +187,10 @@ public class Game {
             if (!cell.getCellState().equals(CellState.EMPTY)) {
                 System.out.println("Cell is already occupied. Play again!");
                 executeMove();
+                return false;
             }
         }
+        return true;
     }
 
     public void executeMove() {
@@ -196,7 +198,8 @@ public class Game {
         System.out.println("It's " + player.getName() + "'s turn!");
         Move move = player.makeMove(board);
 
-        validateMove(move);
+        boolean isValid = validateMove(move);
+        if (!isValid) return;
 
         int row = move.getCell().getRow();
         int col = move.getCell().getCol();
@@ -226,5 +229,28 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public void undo() {
+        if (moves.isEmpty()) {
+            System.out.println("Nothing to Undo!");
+            return;
+        }
+        Move move = this.moves.get(moves.size() - 1);
+        Cell moveCell = move.getCell();
+
+        Cell boardCell = this.board.getGrid().get(moveCell.getRow()).get(moveCell.getCol());
+        boardCell.setCellState(CellState.EMPTY);
+        boardCell.setPlayer(null);
+
+        moves.remove(moves.size() - 1);
+
+        nextPlayerId -= 1;
+        nextPlayerId = (nextPlayerId + players.size()) % players.size();
+
+        for (WinningStrategy w : this.winningStrategies) {
+            w.updateForUndo(move);
+        }
+
     }
 }

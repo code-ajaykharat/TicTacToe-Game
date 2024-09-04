@@ -26,4 +26,12 @@ public class RowWinningStrategy implements WinningStrategy {
 
         return currentRow.get(symbol) == board.getDimension();
     }
+
+    @Override
+    public void updateForUndo(Move move) {
+        int row = move.getCell().getRow();
+        char symbol = move.getPlayer().getSymbol();
+        HashMap<Character, Integer> currentRow = rowData.get(row);
+        currentRow.put(symbol, currentRow.get(symbol) - 1);
+    }
 }

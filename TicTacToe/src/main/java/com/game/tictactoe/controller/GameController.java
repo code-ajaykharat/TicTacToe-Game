@@ -34,6 +34,7 @@ public class GameController {
 
     //TODO: undo
     public void undo(Game game) {
+        game.undo();
     }
 
     //TODO: replay

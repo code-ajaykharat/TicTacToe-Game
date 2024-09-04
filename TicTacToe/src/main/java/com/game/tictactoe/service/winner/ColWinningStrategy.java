@@ -26,4 +26,12 @@ public class ColWinningStrategy implements WinningStrategy {
 
         return currentCol.get(symbol) == board.getDimension();
     }
+
+    @Override
+    public void updateForUndo(Move move) {
+        int col = move.getCell().getCol();
+        char symbol = move.getPlayer().getSymbol();
+        HashMap<Character, Integer> currentCol = colData.get(col);
+        currentCol.put(symbol, currentCol.get(symbol) - 1);
+    }
 }

@@ -5,4 +5,5 @@ import com.game.tictactoe.model.Move;
 
 public interface WinningStrategy {
     boolean checkWinner(Board board, Move move);
+    void updateForUndo(Move move);
 }
