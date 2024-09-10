@@ -28,7 +28,7 @@ public class ColWinningStrategy implements WinningStrategy {
     }
 
     @Override
-    public void updateForUndo(Move move) {
+    public void updateForUndo(Board board, Move move) {
         int col = move.getCell().getCol();
         char symbol = move.getPlayer().getSymbol();
         HashMap<Character, Integer> currentCol = colData.get(col);

@@ -209,7 +209,7 @@ public class Game {
 
         move.setPlayer(player);
         move.setCell(cellToFill);
-        moves.add(move);
+        moves.add(new Move(new Cell(row,col,CellState.FILLED,player),player));
 
         nextPlayerId += 1;
         nextPlayerId %= this.players.size();
@@ -217,7 +217,7 @@ public class Game {
         if (checkWinner(board, move)) {
             this.setGameState(GameState.SUCCESS);
             this.winner = player;
-        } else if (moves.size() >= (board.getDimension() * board.getDimension())) {
+        }else if(moves.size() >= (board.getDimension() * board.getDimension())) {
             this.setGameState(GameState.DRAW);
         }
     }
@@ -249,8 +249,30 @@ public class Game {
         nextPlayerId = (nextPlayerId + players.size()) % players.size();
 
         for (WinningStrategy w : this.winningStrategies) {
-            w.updateForUndo(move);
+            w.updateForUndo(this.board, move);
         }
 
+    }
+
+    public void replayOfGame(){
+        int i = 0;
+        Board board1 = new Board(board.getDimension());
+        while(i<this.moves.size()){
+            Move move = moves.get(i);
+            Cell moveCell = move.getCell();
+            int row = moveCell.getRow();
+            int col = moveCell.getCol();
+            Cell gridCell = board1.getGrid().get(row).get(col);
+            gridCell.setPlayer(moveCell.getPlayer());
+            gridCell.setCellState(moveCell.getCellState());
+            System.out.println(gridCell.getPlayer().getName()+" played below move: ");
+            board1.display();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            i++;
+        }
     }
 }

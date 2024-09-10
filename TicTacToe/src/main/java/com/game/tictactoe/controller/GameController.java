@@ -32,12 +32,12 @@ public class GameController {
         return game.getGameState();
     }
 
-    //TODO: undo
     public void undo(Game game) {
         game.undo();
     }
 
     //TODO: replay
     public void replay(Game game) {
+        game.replayOfGame();
     }
 }

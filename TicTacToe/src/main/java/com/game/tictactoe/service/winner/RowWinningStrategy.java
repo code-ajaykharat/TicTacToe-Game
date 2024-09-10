@@ -28,7 +28,7 @@ public class RowWinningStrategy implements WinningStrategy {
     }
 
     @Override
-    public void updateForUndo(Move move) {
+    public void updateForUndo(Board board, Move move) {
         int row = move.getCell().getRow();
         char symbol = move.getPlayer().getSymbol();
         HashMap<Character, Integer> currentRow = rowData.get(row);
